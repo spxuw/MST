@@ -3,7 +3,7 @@ library("FEAST")
 library("ggplot2")
 library(scales)
 setwd("/Users/xu-wenwang/Dropbox/Projects/FEAST/code")
-source('glv_linear.R')
+library(seqtime)
 library(jcolors)
 library(randomForest)
 ################### parameter of glv ########################
@@ -46,21 +46,21 @@ for (sigma in c(0,0.00001,0.0001,0.001,0.01,0.1)){
     ## first source
     y_1 = runif(N)
     y_1[setdiff(1:N,collection_1)] = 0
-    x = glv_linear(N = N, A, b = b, y = y_1, tstart = 0, tend = 100, tstep = 0.1, perturb = NULL)
+    x = glv(N = N, A, b = b, y = y_1, tstart = 0, tend = 100, tstep = 0.1, perturb = NULL)
     steady_source[1,] = x[,ncol(x)]
     meta_source = rbind(meta_source, c(paste("Adult",1, sep = ""), 'Source', 1))
     
     ## second source
     y_2 = runif(N)
     y_2[setdiff(1:N,collection_2)] = 0
-    x = glv_linear(N = N, A, b = b, y = y_2, tstart = 0, tend = 100, tstep = 0.1, perturb = NULL)
+    x = glv(N = N, A, b = b, y = y_2, tstart = 0, tend = 100, tstep = 0.1, perturb = NULL)
     steady_source[2,] = x[,ncol(x)]
     meta_source = rbind(meta_source, c(paste("Adult",2, sep = ""), 'Source', 2))
     
     ## third source
     y_3 = runif(N)
     y_3[setdiff(1:N,collection_3)] = 0
-    x = glv_linear(N = N, A, b = b, y = y_3, tstart = 0, tend = 100, tstep = 0.1, perturb = NULL)
+    x = glv(N = N, A, b = b, y = y_3, tstart = 0, tend = 100, tstep = 0.1, perturb = NULL)
     steady_source[3,] = x[,ncol(x)]
     meta_source = rbind(meta_source, c(paste("Adult",3, sep = ""), 'Source', 3))
     
@@ -80,7 +80,7 @@ for (sigma in c(0,0.00001,0.0001,0.001,0.01,0.1)){
       m = m/sum(m)
       y = rep(0, N)
       for (j in 1:M){ y = y + m[j]*steady_source[j,]}
-      x = glv_linear(N = N, A, b = b, y = y, tstart = 0, tend = 100, tstep = 0.1, perturb = NULL)
+      x = glv(N = N, A, b = b, y = y, tstart = 0, tend = 100, tstep = 0.1, perturb = NULL)
       x[x<0]=0
       steady_sink[i,] = x[,ncol(x)]/sum(x[,ncol(x)])
       true_source[i,] = m
@@ -179,6 +179,6 @@ g1<- ggplot(dat, aes(x=strength_final+0.000001, y=corr_final,color=method)) +
     axis.text.y = element_text(color="black", size=10)
   )
 
-ggsave(g1,file="../figures/GLV_linear_interaction_sigma_relative.pdf",width=3, height=2.8)
+ggsave(g1,file="../figures/glv_interaction_sigma_relative.pdf",width=3, height=2.8)
 write.table(dat, file = "../results/GLV/R_linear_interaction_sigma_relative.csv", row.names = FALSE, col.names = FALSE,sep=",")
 
