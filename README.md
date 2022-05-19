@@ -6,3 +6,8 @@ randomForest\
 FEAST\
 Sourcetracker\
 Seqtime
+
+## Guide
+Seqtime package is used to generate the simulated data.\
+FEAST, Sourcetracker and randomforest are three microbial source tracking solvers.
+
