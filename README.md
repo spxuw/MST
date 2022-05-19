@@ -3,5 +3,9 @@ This repository contains the code used in paper "Ecological Dynamics Imposes Fun
 
 ## R packages
 randomForest
+
 FEAST
+
 Sourcetracker
+
+Seqtime
