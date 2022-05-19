@@ -1,6 +1,5 @@
 library("ggplot2")
 library("readxl")
-library("ggalluvial")
 library(reshape2)
 library("ggpubr")
 library(jcolors)
