@@ -1,6 +1,9 @@
 # Ecological Dynamics Imposes Fundamental Challenges in Microbial Source Tracking.
 This repository contains the code used in paper "Ecological Dynamics Imposes Fundamental Challenges in Microbial Source Tracking".
 
+## System requirements
+All codes were tested in R 4.1.2 on a macOS machine.
+
 ## R packages
 randomForest\
 FEAST\
