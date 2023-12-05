@@ -107,7 +107,7 @@ for (sigma in c(0,0.00001,0.0001,0.001,0.01,0.1)){
     FEAST_output = FEAST_output[rownames(count_table)[(M+1):nrow(count_table)],]
     FEAST_output = FEAST_output[,c(rownames(count_table)[1:M],'Unknown')]
     
-    corr_R = R2_Score(melt(true_source)$value,  melt(as.numeric(FEAST_output[,1:M]))$value)
+    corr_R = R2_Score(melt(as.numeric(FEAST_output[,1:M]))$value,melt(true_source)$value)
     corr_feast = c(corr_feast, corr_R)
     for (row in 1:nrow(steady_source)) {steady_source[row,]<-steady_source[row,]/sum(steady_source[row,])}
     JSD_all = c(JSD_all, mean(jsdmatrix(steady_source)[upper.tri(jsdmatrix(steady_source))]))
@@ -126,7 +126,7 @@ for (sigma in c(0,0.00001,0.0001,0.001,0.01,0.1)){
     results_pro = results_pro[rownames(count_table)[(M+1):nrow(count_table)],]
     results_pro = results_pro[,c(meta_table$Env[1:M],'Unknown')]
     
-    corr_R = R2_Score(melt(true_source)$value,  melt(as.numeric(results_pro[,1:M]))$value)
+    corr_R = R2_Score(melt(as.numeric(results_pro[,1:M]))$value,melt(true_source)$value)
     corr_sourcetracker = c(corr_sourcetracker, corr_R)
     
     ############ random forest ########################
@@ -138,7 +138,7 @@ for (sigma in c(0,0.00001,0.0001,0.001,0.01,0.1)){
     
     rf <- randomForest(droplevels(train_data$sourcesink)~., data=train_data)
     p2 <- predict(rf, count_table[test.ix,],type = "prob")
-    corr_R = R2_Score(melt(true_source)$value,  melt(as.numeric(p2[,1:M]))$value)
+    corr_R = R2_Score(melt(as.numeric(p2[,1:M]))$value,melt(true_source)$value)
     corr_randomforest = c(corr_randomforest, corr_R)
   }
   corr_final = c(corr_final, mean(corr_feast), mean(corr_sourcetracker), mean(corr_randomforest))
